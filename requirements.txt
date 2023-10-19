@@ -3,6 +3,5 @@ keras
 opencv-python-rolling==4.7.0.72
 numpy
 tensorflow
-streamlit_webrtc
 opencv-python-headless
 imutils
