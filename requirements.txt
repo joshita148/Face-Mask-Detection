@@ -5,3 +5,4 @@ numpy
 tensorflow
 streamlit_webrtc
 opencv-python-headless
+imutils
