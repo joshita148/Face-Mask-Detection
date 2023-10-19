@@ -135,6 +135,3 @@ while run:
 		break
 
 
-
-# do a bit of cleanup
-cv2.destroyAllWindows()
