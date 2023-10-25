@@ -86,7 +86,7 @@ st.title('Face Mask Detection')
 run = st.button('Run')
 frame_width = 800
 FRAME_WINDOW = st.image([])
-camera = cv2.VideoCapture(-1)
+camera = cv2.VideoCapture(1)
 
 stop = st.button('Stop')
 
