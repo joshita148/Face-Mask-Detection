@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 def get_ice_servers():
 
     try:
-        account_sid = os.environ["AC25b01fca5e4873e773f706152764fd29"]
-        auth_token = os.environ["ad0d04f9f2d996a612dda39f8ae53e13"]
+        account_sid = "AC25b01fca5e4873e773f706152764fd29"
+        auth_token = "f0189d9d93e956d18c883705a14d69a1"
     except KeyError:
         logger.warning(
             "Twilio credentials are not set. Fallback to a free STUN server from Google."  # noqa: E501
