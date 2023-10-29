@@ -4,20 +4,25 @@ from keras.preprocessing.image import img_to_array
 from keras.models import load_model
 import numpy as np
 import streamlit as st
-import imutils
 import cv2
 from turn import get_ice_servers
 from streamlit_webrtc import webrtc_streamer
 import av
 
 
-class VideoProcessor:
+# load our serialized face detector model from disk
+prototxtPath = r"face_detector\deploy.prototxt"
+weightsPath = r"face_detector\res10_300x300_ssd_iter_140000.caffemodel"
+faceNet = cv2.dnn.readNet(prototxtPath, weightsPath)
 
-    def detect_and_predict_mask(self, frame):
+# load the face mask detector model from disk
+maskNet = load_model("mask_detector_model.h5")
+
+def detect_and_predict_mask(frame):
         # grab the dimensions of the frame and then construct a blob
         # from it
+
         img = frame.to_ndarray(format="bgr24")
-        img = imutils.resize(img, width=400)
         (h, w) = img.shape[:2]
         blob = cv2.dnn.blobFromImage(img, 1.0, (224, 224),
                                      (104.0, 177.0, 123.0))
@@ -86,7 +91,7 @@ class VideoProcessor:
             color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
 
             # include the probability in the label
-            label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
+            label = "{}".format(label)
 
             # display the label and bounding box rectangle on the output
             # frame
@@ -94,23 +99,13 @@ class VideoProcessor:
                         cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
             cv2.rectangle(img, (startX, startY), (endX, endY), color, 2)
 
-
         return av.VideoFrame.from_ndarray(img, format("bgr24"))
 
-# load our serialized face detector model from disk
-prototxtPath = r"face_detector\deploy.prototxt"
-weightsPath = r"face_detector\res10_300x300_ssd_iter_140000.caffemodel"
-faceNet = cv2.dnn.readNet(prototxtPath, weightsPath)
 
-# load the face mask detector model from disk
-maskNet = load_model("mask_detector_model.h5")
+
 
 st.title('Face Mask Detection')
 
 # initialize the video stream
-webrtc_streamer(key = "key",
-                video_processor_factory=VideoProcessor,
-                rtc_configuration={"iceServers": get_ice_servers()},
-                media_stream_constraints={"video": True, "audio": False},
-                async_processing=True
-                )
+webrtc_streamer(key="example", video_frame_callback=detect_and_predict_mask, media_stream_constraints={"video": True, "audio": False},
+    async_processing=True, rtc_configuration={"iceServers": get_ice_servers()})
