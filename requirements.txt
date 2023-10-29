@@ -111,3 +111,5 @@ Werkzeug==3.0.0
 wrapt==1.14.1
 yarl==1.9.2
 zipp==3.17.0
+opencv-contrib-python==4.8.1.78
+opencv-python==4.8.1.78
