@@ -32,6 +32,7 @@ google-crc32c==1.5.0
 google-pasta==0.2.0
 grpcio==1.59.0
 h5py==3.10.0
+ha-av==10.1.1
 huggingface-hub==0.17.3
 idna==3.4
 ifaddr==0.2.0
@@ -54,6 +55,7 @@ numpy==1.26.1
 oauthlib==3.2.2
 opencv-contrib-python==4.8.1.78
 opencv-python==4.8.1.78
+opencv-python-headless==4.8.1.78
 opt-einsum==3.3.0
 packaging==23.2
 pandas==2.1.1
@@ -111,4 +113,3 @@ Werkzeug==3.0.0
 wrapt==1.14.1
 yarl==1.9.2
 zipp==3.17.0
-opencv-python-headless
